@@ -1,0 +1,66 @@
+
+## Anıl Utku Ilgın , 2260073
+.pos 0
+	irmovq stack, %rsp
+	call main
+	halt
+
+.pos 0x100
+ele0:
+	.quad 0x0000a
+	.quad ele1
+ele1:
+	.quad 0x000b0
+	.quad ele2
+ele2:
+	.quad 0x00c00
+	.quad ele3
+ele3:
+	.quad 0x0d000
+	.quad ele4
+ele4:
+	.quad 0xe0000
+	.quad 0
+	
+
+main:
+	irmovq ele0, %rdi
+	irmovq $8, %r8
+	irmovq $0, %r14
+	call rrevq
+	ret
+	
+rrevq:
+    #rdi input, r9 is the input->next , r11 = head->next->next, rdx = rev_head
+    rrmovq %rdi, %r9
+    addq %r8, %r9
+    mrmovq (%r9), %r9
+    andq %rdi, %rdi
+    je return
+    andq %r9, %r9
+    je return
+    rrmovq %rdi, %rbx
+    pushq %rbx #push current head to stack
+    rrmovq %r9, %rdi
+    call rrevq #recursive call
+    rrmovq %rax, %rdx
+    popq %rdi #recover head from stack
+    rrmovq %rdi, %r10
+    addq %r8, %r10
+    mrmovq (%r10), %r10
+    addq %r8, %r10
+    rmmovq %rdi, (%r10)
+    rrmovq %rdi, %r10
+    addq %r8, %r10
+    rmmovq %r14, (%r10)
+    rrmovq %rdx, %rax
+    ret
+	
+return:
+    rrmovq %rdi, %rax
+    ret
+
+.pos 0x300
+stack:	
+
+

@@ -1,0 +1,213 @@
+#/* $begin ncopy-ys */
+##################################################################
+# ncopy.ys - Copy a src block of len words to dst.
+# Return the number of positive words (>0) contained in src.
+#
+# Include your name and ID here.
+#
+# Describe how and why you modified the baseline code.
+#
+####################################################################
+## Anıl Utku Ilgın , 2260073
+## I modified the ncopy by first replacing the irmovq -> addq operations with iaddq only, making addition/substractions with only that.
+## Later, i unfolded the loop to 10 to make it run more simultaneous, instead of registering at every cycle i registered 10 values at every cycle
+## and made the operations on them. Since making mrmovq, rmmovq sequentially makes a data dependency, i tried to overcome it by sequentially using mrmovqs
+## or just adding other operations between mrmovq and rmmovq operations of same register. Moreover, since i have unfolded loop to 10, when the remaining len
+## went under 10, i implemented a remainder jump table to calculate the remaining smaller than 10 part of array, when array length becomes smaller then 10, 
+## it multiplies itself by 8 and jumps to the appopriate part of the table to continue calculations. The jump table is also sequential, so in order to
+## stay under 1000 byte, i implemented in a sequential way so that r9 -> r8 -> r7 ..., depending on the remainder it will start on its part. 
+## I also tried to cover the andq - rmmovq - mrmovq - jle sequence to make pipeline operations faster (ofc rm and mr registers are different)
+## but I'm not sure if they made a miracle.    
+####################################################################
+
+
+
+
+
+##################################################################
+# Do not modify this portion
+# Function prologue.
+# %rdi = src, %rsi = dst, %rdx = len
+ncopy:
+
+##################################################################
+# You can modify this portion
+	# Loop header
+	xorq %rax,%rax		# count = 0;
+	iaddq $-10, %rdx		# len < 0?
+	jl remainder		# if so, goto cont:
+
+Loop:
+	mrmovq (%rdi), %r10	# read val from src...
+	mrmovq 8(%rdi), %r11	# read val from src+1
+	mrmovq 16(%rdi), %r12	# read val from src+2
+	mrmovq 24(%rdi), %r13	# read val from src+3
+	rmmovq %r10, (%rsi)	# ...and store it to dst, dst+1, dst+2
+	rmmovq %r11, 8(%rsi)
+	rmmovq %r12, 16(%rsi)
+
+	andq %r10, %r10		# val <= 0?
+	rmmovq %r13, 24(%rsi)
+	mrmovq 40(%rdi), %r10
+	jle a_if_check		# if so, goto Npos:
+	iaddq $1, %rax		# count++
+
+a_if_check:
+	mrmovq 32(%rdi), %r14	# read val from src+4
+	andq %r11, %r11
+	mrmovq 48(%rdi), %r11
+	rmmovq %r10, 40(%rsi)
+	jle b_if_check
+	iaddq $1, %rax
+
+b_if_check:
+	rmmovq %r14, 32(%rsi)
+	andq %r12, %r12
+	mrmovq 56(%rdi), %r12
+	rmmovq %r11, 48(%rsi)
+	jle c_if_check
+	iaddq $1, %rax
+
+c_if_check:
+	andq %r13, %r13
+	mrmovq 64(%rdi), %r13
+	rmmovq %r12, 56(%rsi)
+	jle d_if_check
+	iaddq $1, %rax
+
+d_if_check:
+	andq %r14, %r14
+	mrmovq 72(%rdi), %r14
+	rmmovq %r13, 64(%rsi)
+	jle Npos1
+	iaddq $1, %rax
+
+Npos1:
+	andq %r10, %r10
+	rmmovq %r14, 72(%rsi)
+	jle e_if_check
+	iaddq $1, %rax
+
+e_if_check:
+	andq %r11, %r11
+	jle f_if_check
+	iaddq $1, %rax
+
+f_if_check:
+	andq %r12, %r12
+	jle g_if_check
+	iaddq $1, %rax
+
+g_if_check:
+	andq %r13, %r13
+	jle h_if_check
+	iaddq $1, %rax
+
+h_if_check:
+	andq %r14, %r14
+	jle Npos
+	iaddq $1, %rax
+
+Npos:
+	andq %rdx, %rdx
+	je Done
+	iaddq $80, %rdi		# src++
+	iaddq $80, %rsi		# dst++
+	iaddq $-10, %rdx		# len = len - 10
+	jge Loop			# if so, goto Loop:
+
+remainder:
+		iaddq $10, %rdx
+		addq %rdx, %rdx
+		addq %rdx, %rdx
+		addq %rdx, %rdx
+		mrmovq jump_table(%rdx), %rdx
+		mrmovq (%rdi), %r10
+		mrmovq 8(%rdi), %r11
+		pushq %rdx
+		ret
+
+jump_table:
+		.quad Done
+		.quad rem1
+		.quad rem2
+		.quad rem3
+		.quad rem4
+		.quad rem5
+		.quad rem6
+		.quad rem7
+		.quad rem8
+		.quad rem9
+
+rem9:
+	mrmovq 64(%rdi), %r12
+	rmmovq %r12, 64(%rsi)
+	andq %r12, %r12
+	jle rem8
+	iaddq $1, %rax
+
+rem8:
+	mrmovq 56(%rdi), %r12
+	rmmovq %r12, 56(%rsi)
+	andq %r12, %r12
+	jle rem7
+	iaddq $1, %rax
+
+rem7:
+	mrmovq 48(%rdi), %r12
+	rmmovq %r12, 48(%rsi)
+	andq %r12, %r12
+	jle rem6
+	iaddq $1, %rax
+
+rem6:
+	mrmovq 40(%rdi), %r12
+	rmmovq %r12, 40(%rsi)
+	andq %r12, %r12
+	jle rem5
+	iaddq $1, %rax
+
+rem5:
+	mrmovq 32(%rdi), %r12
+	rmmovq %r12, 32(%rsi)
+	andq %r12, %r12
+	jle rem4
+	iaddq $1, %rax
+
+rem4:
+	mrmovq 24(%rdi), %r12
+	rmmovq %r12, 24(%rsi)
+	andq %r12, %r12
+	jle rem3
+	iaddq $1, %rax
+
+rem3:
+	mrmovq 16(%rdi), %r12
+	rmmovq %r12, 16(%rsi)
+	andq %r12, %r12
+	jle rem2
+	iaddq $1, %rax
+
+rem2:
+	rmmovq %r11, 8(%rsi)
+	andq %r11, %r11
+	jle rem1
+	iaddq $1, %rax
+
+rem1:
+	rmmovq %r10, (%rsi)
+	andq %r10, %r10
+	jle Done
+	iaddq $1, %rax
+	jmp Done
+
+
+##################################################################
+# Do not modify the following section of code
+# Function epilogue.
+Done:
+	ret
+##################################################################
+# Keep the following label at the end of your function
+End:
+#/* $end ncopy-ys */

@@ -1,0 +1,53 @@
+
+## Anıl Utku Ilgın , 2260073
+.pos 0
+	irmovq stack, %rsp
+	call main
+	halt
+
+.pos 0x100
+ele0:
+	.quad 0x0000a
+	.quad ele1
+ele1:
+	.quad 0x000b0
+	.quad ele2
+ele2:
+	.quad 0x00c00
+	.quad ele3
+ele3:
+	.quad 0x0d000
+	.quad ele4
+ele4:
+	.quad 0xe0000
+	.quad 0
+	
+	
+main:
+	irmovq ele0, %rdi
+	call rev
+	ret
+	
+rev:
+	#head = %rdi , prev = %r8, r9 = increment
+	irmovq $0, %r8
+	irmovq $8, %r9
+	andq %rdi, %rdi
+	jg loop
+	ret
+
+loop: 
+    rrmovq %rdi, %r10
+    addq %r9, %r10
+    mrmovq (%r10), %r11 #next * = head->next
+	rmmovq %r8, (%r10) #head->next = prev
+	rrmovq %rdi, %r8
+	rrmovq %r11, %rdi
+	andq %rdi, %rdi
+	jg loop
+	rrmovq %r8, %rax
+	ret
+	
+.pos 0x300
+stack:	
+

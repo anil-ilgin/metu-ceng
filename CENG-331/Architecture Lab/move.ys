@@ -1,0 +1,77 @@
+
+## Anıl Utku Ilgın , 2260073
+.pos 0
+	irmovq stack, %rsp
+	call main
+	halt
+
+.pos 0x100
+array:
+.quad 0x000000001
+.quad 0x000000020
+.quad 0x000000300
+# a pointer to the fourth element here
+arrayp3:
+.quad 0x000004000
+.quad 0x000050000
+.quad 0x000600000
+.quad 0x007000000
+.quad 0x080000000
+.quad 0x900000000
+	
+#the move function	
+main:
+#rdi = arrayp3, rsi = array, rdx = len, rax = checksum, r8 = 1
+#r9  = dest_v , r_10 = src_v, rbx = sizeof(long)
+	irmovq arrayp3, %rdi
+	irmovq array, %rsi
+	irmovq $5, %rdx
+	irmovq $0, %rax
+	irmovq $8, %r8
+	irmovq $1, %rbx
+    rrmovq %rdi, %r9
+    rrmovq %rsi, %r10
+    rrmovq %rdx, %r11 # loop count
+    jmp loop
+	ret
+
+loop:
+    andq %r11, %r11
+    je if_check
+    addq %r8, %r13
+    subq %rbx, %r11
+    jmp loop
+
+if_check:
+    rrmovq %r13, %r14
+    addq %r10, %r13
+    subq %r9, %r13
+    jle move
+    rrmovq %r9, %r13
+    subq %r10, %r13
+    jle move
+    addq %r14, %rdi
+    subq %r8, %rdi
+    addq %r14, %rsi
+    subq %r8, %rsi
+    irmovq $-8, %r8
+    jmp move
+    
+move:
+    andq %rdx, %rdx
+    je return
+    xorq %rsi, %rax
+    mrmovq (%rsi), %r13
+    rmmovq %r13, (%rdi)
+    addq %r8, %rdi
+    addq %r8, %rsi
+    subq %rbx, %rdx
+    jmp move
+    
+return:
+    ret
+
+
+.pos 0x300
+stack:	
+

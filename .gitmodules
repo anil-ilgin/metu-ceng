@@ -1,0 +1,3 @@
+[submodule "CENG-488/mdeepred-web/MDeePred"]
+	path = CENG-488/mdeepred-web/MDeePred
+	url = https://github.com/cansyl/MDeePred

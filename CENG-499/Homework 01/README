@@ -1,0 +1,5 @@
+#Terminale python3 hw1.py komutunu yazmanız yeterli.
+#Terminal'e o an kullanılan hyperparametreleri, Epoch'ların ilerleyişini ve hangi noktada çıktığını,
+#Training'i bitirdiği noktadaki accuracy değerlerini de bastıracaktır. Bu değerlerin tamamını
+#Test_Results.txt dosyasına da kaydedecektir gelecek kullanımlar için.
+

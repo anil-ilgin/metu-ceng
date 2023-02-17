@@ -22,6 +22,20 @@ pairs that don’t exist in the database. In the end, this comprehensive
 web service provides end-users easy-to-use, reliable information
 about given protein-drug pairs bioactivities.
 
+### Tech Stack
+#### Backend
+- [Flask 1.1.2](https://github.com/pallets/flask)
+- [SQLite](https://www.sqlite.org/index.html)
+- [Chembl Websource Client](https://github.com/chembl/chembl_webresource_client)
+- [Rdkit](https://www.rdkit.org/)
+### Frontend Styling
+- [Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
+
+
+Overview:
+
+![Overview of ProBinDeePred](https://github.com/anil-ilgin/metu-ceng/blob/main/CENG-488/mdeepred-web/gui.png "Web-Service Overview")
+
 
 
 This is an undergraduate research done in 2020-2021 Spring Semester @METU being part of CENG488 Guided Research course.

@@ -22,6 +22,10 @@ pairs that don’t exist in the database. In the end, this comprehensive
 web service provides end-users easy-to-use, reliable information
 about given protein-drug pairs bioactivities.
 
+
+
 This is an undergraduate research done in 2020-2021 Spring Semester @METU being part of CENG488 Guided Research course.
 
 Term paper : [ProBinDeePred : a web-service for protein-drug binding affinity prediction](https://github.com/anil-ilgin/metu-ceng/blob/14e54fb9a5819b91d616a60ab3e81a5f6ce28b06/CENG-488/Term%20Paper%20-%20ProBinDeePred.pdf)
+
+Symposium Link : [GUIDED2021: 3rd Guided Research Symposium ](https://saksagan.ceng.metu.edu.tr/courses/ceng488/index.html)

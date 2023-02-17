@@ -1,5 +1,3 @@
-#Terminale python3 hw1.py komutunu yazmanız yeterli.
-#Terminal'e o an kullanılan hyperparametreleri, Epoch'ların ilerleyişini ve hangi noktada çıktığını,
-#Training'i bitirdiği noktadaki accuracy değerlerini de bastıracaktır. Bu değerlerin tamamını
-#Test_Results.txt dosyasına da kaydedecektir gelecek kullanımlar için.
-
+# To run : python3 hw1.py
+# Terminal output: hyperparameters, epochs and accuracy at the end of training.
+# Results will be in Test_Results.txt

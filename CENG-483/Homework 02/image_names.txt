@@ -1,0 +1,15 @@
+apple
+aquarium_fish
+beetle
+camel
+crab
+cup
+elephant
+flatfish
+lion
+mushroom
+orange
+pear
+road
+skyscraper
+woman

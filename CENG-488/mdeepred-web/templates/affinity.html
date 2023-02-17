@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title> MDeePred - Web</title>
+{% endblock %}
+
+
+{% block body %}
+
+    <form  action='/affinity' method='POST'>
+        <div class="mb-3 text-center align-items-center">
+            <div class="container">
+                <div class="row">
+                    <h2 class="text-primary">MDeePred - Web</h2>
+                    <p>
+                        This is a the test website for web implementation of 488 project. <br>
+                    </p>
+                </div>
+                <div class="row-2">
+                    <h6>How to use this service?</h6> <br>
+                    <p> 1) You need to choose the target protein family so we can make the predictions more
+                    accurate. </p>
+                    <p> 2) You need to choose which ID type you are using, so we can arrange the data
+                    according to that</p>
+                    <p> 3) You can use either CHEMBL ID of chemicals, or SMILES representations of them,
+                    but noth both. You need to choose which type are you using.</p>
+                    <p> 4) Making predictions can take time. Therefore, not to bore you down on this website, we
+                    ask your email so we can send the interaction values as csv file. We don't store or share your
+                    email anywhere.</p>
+                </div>
+                <div class="row">
+                    <label for="proteins" class="form-label "> Protein IDs: </label>
+                    <input type="text" class="form-control" name="proteins" id="proteins">
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <select class="form-control" aria-label="protselect" id="protselect" name="protselect">
+                            <option selected>Please choose a protein family: </option>
+                            <option value="kinome">Kinome</option>
+                            <option value="gpcr"> GPCR </option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <select class="form-control" aria-label="prot_rep_select" id="prot_rep_select" name="prot_rep_select">
+                            <option selected>Please choose a protein ID representation: </option>
+                            <option value="uniprot"> Uniprot </option>
+                            <option value="chembl"> CHEMBL </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-3"></div>
+                <div class="row">
+                    <label for="drugs" class="form-label"> Compound IDs: </label>
+                    <input type="text" class="form-control" name="drugs" id="drugs">
+                </div>
+                <div class="row">
+                    <select class="form-control" aria-label="drugselect" id="drugselect" name="drugselect">
+                        <option selected>Please choose a representation: </option>
+                        <option value="chembl">CHEMBL Ids</option>
+                        <option value="smiles">SMILES strings</option>
+                    </select>
+                </div>
+                <div class="row mt-3"></div>
+                <div class="row">
+                    <label for="email" class="form-label"> Email Address: </label>
+                    <input type="text" class="form-control" name="email" id="email">
+                </div>
+                <div class="row mt-3"></div>
+                <div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </form>
+    {% if check %}
+        <div class="mb-3 text-center align-items-center">
+            <div class="alert alert-warning" role="alert">
+                You have entered an incorrect input, please check your inputs again.
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

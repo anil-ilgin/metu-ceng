@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title> Deneme</title>
+{% endblock %}
+
+
+
+{% block body %}
+    <h2>Deneme </h2>
+    <form  action='/deneme' method='POST'>
+        Protein IDs: <input type="text" name="protein" id="protein">
+        <br>
+        Drug IDs : <input type="text" name="drug" id="drug">
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+    <br>
+    {% if check %}
+        <p> Your result is {{ drug_id }},  {{ protein_id }}, {{ affinity }} </p>
+        <br>
+    {% endif %}
+    <hr>
+{% endblock %}

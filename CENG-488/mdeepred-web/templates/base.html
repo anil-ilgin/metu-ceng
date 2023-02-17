@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block head %} {% endblock %}
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href={{ url_for('static', filename='css/custom.css') }}>
+</head>
+
+<style>
+    [class="col"] {
+        background-color: transparent;
+        border: 1px solid #ffffff;
+        color: #ffffff;
+    }
+    [class="col-sm"] {
+        background-color: transparent;
+        border: 1px solid #30799B;
+        color: #000000;
+    }
+    [class="row"] {
+        padding: 0.5rem;
+        background-color: transparent;
+        color: #000000;
+    }
+    [class="row-2"] {
+        background-color: rgba(173, 216, 230, 0.5);
+        border: 1px solid #30799B;
+        color: #000000;
+    }
+
+</style>
+
+
+
+<body class="py-5">
+
+    <script src="{{ url_for('static',filename='js/bootstrap.bundle.min.js') }}"> </script>
+    {% block body %} {% endblock %}
+
+</body>
+</html>

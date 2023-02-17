@@ -26,3 +26,5 @@ Homeworks and projects I've done during my bachelors degree at METU Computer Eng
 
 **CENG 499: Intro to Machine Learning** - This course provides a broad introduction to machine learning. The topics include supervised and unsupervised learning, Bayesion inference/classification, regression, clustering, kernels and Support Vector Machines (SVM) and accompanying concepts such as model and feature selection, combining classifiers such as boosting, active learning, dimension reduction techniques. 
 
+
+Source : https://catalog.metu.edu.tr/prog_courses.php?prog=571

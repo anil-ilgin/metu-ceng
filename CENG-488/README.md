@@ -29,7 +29,7 @@ about given protein-drug pairs bioactivities.
 - [Chembl Websource Client](https://github.com/chembl/chembl_webresource_client)
 - [Rdkit](https://www.rdkit.org/)
 - [Pytorch](https://pytorch.org/get-started/previous-versions/)
-- [Sklearn] (https://scikit-learn.org/0.20/install.html)
+- [Sklearn](https://scikit-learn.org/0.20/install.html)
 ### Frontend Styling
 - [Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
 
